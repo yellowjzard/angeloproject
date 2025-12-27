@@ -3,6 +3,7 @@
     --secondary: #7000ff;
     --bg: #0a0a0c;
     --card-bg: rgba(255, 255, 255, 0.05);
+    --pdf-color: #ff4757;
 }
 
 body {
@@ -33,25 +34,51 @@ body {
     padding: 2rem;
     border-radius: 24px;
     width: 90%;
-    max-width: 800px;
+    max-width: 900px;
     margin: 20px;
     text-align: center;
 }
 
 .highlight { color: var(--primary); text-shadow: 0 0 15px var(--primary); }
 
+/* Input Area */
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
 .drop-zone {
     border: 2px dashed rgba(255, 255, 255, 0.2);
     border-radius: 16px;
-    padding: 40px;
-    margin-bottom: 20px;
+    padding: 30px;
+    width: 100%;
+    box-sizing: border-box;
     cursor: pointer;
     transition: 0.3s;
 }
-
 .drop-zone:hover { border-color: var(--primary); background: rgba(0, 242, 255, 0.05); }
 
-.controls { margin-bottom: 20px; display: flex; gap: 10px; justify-content: center; }
+.folder-btn {
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    width: 100%;
+}
+
+/* Controls */
+.controls { 
+    margin-bottom: 20px; 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 15px; 
+    justify-content: space-between; 
+    align-items: center;
+}
+
+.sort-group, .action-group { display: flex; gap: 10px; }
 
 button {
     background: #2a2a2a;
@@ -61,16 +88,27 @@ button {
     border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
+    transition: 0.2s;
+}
+button:hover { transform: translateY(-2px); }
+
+/* Pulsanti Speciali */
+.highlight-btn {
+    background: linear-gradient(45deg, var(--secondary), var(--primary));
+    border: none;
+    box-shadow: 0 4px 15px rgba(112, 0, 255, 0.4);
 }
 
-button:hover { background: var(--secondary); border-color: var(--secondary); }
+.pdf-btn {
+    background: var(--pdf-color);
+    border-color: var(--pdf-color);
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+}
 
+/* Tabella */
 .table-wrapper { width: 100%; overflow-x: auto; background: rgba(0,0,0,0.2); border-radius: 12px; }
-
 table { width: 100%; border-collapse: collapse; text-align: left; }
-
 th, td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-
 th { color: var(--primary); font-size: 0.8rem; letter-spacing: 1px; }
 
 .camelot-tag {
@@ -79,6 +117,9 @@ th { color: var(--primary); font-size: 0.8rem; letter-spacing: 1px; }
     border-radius: 6px;
     font-weight: bold;
     font-size: 0.9rem;
+    display: inline-block;
+    min-width: 30px;
+    text-align: center;
 }
 
 .hidden { display: none; }
