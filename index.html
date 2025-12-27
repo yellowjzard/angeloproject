@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DJ Analyzer Pro - Multi</title>
+    <title>DJ Analyzer Pro - Ultimate</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     <link rel="manifest" href="manifest.json">
 </head>
 <body>
@@ -13,39 +15,87 @@
     <div class="container">
         <header>
             <h1>DJ <span class="highlight">Analyzer</span></h1>
-            <p>Carica le tue tracce e ordinale per il mix perfetto</p>
+            <p>La tua suite completa per l'analisi musicale</p>
         </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('library')">📚 Organizza Libreria</button>
+            <button class="tab-btn" onclick="switchTab('mix')">🎚️ Analizza DJ Set</button>
+        </div>
         
-        <div id="drop-zone" class="drop-zone">
-            <div class="icon">📁</div>
-            <input type="file" id="file-input" accept="audio/*" hidden multiple>
-            <label for="file-input">Trascina i file o <span class="browse">sfoglia</span></label>
-        </div>
-
-        <div id="loader" class="hidden">
-            <div class="spinner"></div>
-            <p id="loader-text">Analizzando...</p>
-        </div>
-
-        <div id="results-container" class="hidden">
-            <div class="controls">
-                <button onclick="sortTracks('bpm')">Ordina per BPM</button>
-                <button onclick="sortTracks('camelot')">Ordina per Camelot</button>
+        <section id="library-section" class="tab-content active">
+            <div class="input-container">
+                <div id="drop-zone" class="drop-zone">
+                    <div class="icon">📁</div>
+                    <p>Trascina file singoli qui</p>
+                    <input type="file" id="file-input" accept="audio/*" hidden multiple>
+                </div>
+                <button id="folder-btn" class="folder-btn">📂 Carica Intera Cartella</button>
+                <input type="file" id="folder-input" webkitdirectory directory hidden>
             </div>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Titolo</th>
-                            <th>BPM</th>
-                            <th>Key</th>
-                            <th>Camelot</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tracks-body"></tbody>
-                </table>
+
+            <div id="loader" class="hidden">
+                <div class="spinner"></div>
+                <p id="loader-text">Analizzando...</p>
             </div>
-        </div>
+
+            <div id="results-container" class="hidden">
+                <div class="controls">
+                    <div class="sort-group">
+                        <button onclick="sortTracks('bpm')">BPM ⬆⬇</button>
+                        <button onclick="sortTracks('camelot')">Camelot ⬆⬇</button>
+                    </div>
+                    <div class="action-group">
+                        <button onclick="smartMix()" class="highlight-btn">✨ Smart Mix</button>
+                        <button onclick="exportPDF()" class="pdf-btn">📄 Scarica PDF</button>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Titolo</th>
+                                <th>BPM</th>
+                                <th>Camelot</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tracks-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="mix-section" class="tab-content hidden">
+            <div class="mix-upload-area">
+                <h3>Carica il tuo DJ Set (Unico file lungo)</h3>
+                <p class="info-text">Analizzeremo il file ogni 3 minuti per mostrarti l'evoluzione di BPM e Chiave.</p>
+                <input type="file" id="mix-input" accept="audio/*" class="big-input">
+            </div>
+
+            <div id="mix-loader" class="hidden">
+                <div class="spinner"></div>
+                <p>Scansione del mix in corso... (Potrebbe richiedere tempo)</p>
+            </div>
+
+            <div id="mix-results" class="hidden">
+                <div class="table-wrapper">
+                    <table id="mix-table">
+                        <thead>
+                            <tr>
+                                <th>Minuto</th>
+                                <th>BPM Rilevato</th>
+                                <th>Key Probabile</th>
+                                <th>Energia</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mix-body"></tbody>
+                    </table>
+                </div>
+                <button onclick="exportMixPDF()" class="pdf-btn" style="margin-top: 20px;">📄 Report Mix PDF</button>
+            </div>
+        </section>
+
     </div>
     <script src="app.js"></script>
 </body>
