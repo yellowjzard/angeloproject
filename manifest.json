@@ -1,0 +1,15 @@
+{
+  "short_name": "DJAnalyzer",
+  "name": "DJ Audio Key & BPM Analyzer",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3659/3659744.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0a0a0c",
+  "background_color": "#0a0a0c"
+}
